@@ -27,7 +27,7 @@ USER 0
 # Install isolated-vm dependencies
 # hadolint ignore=DL3041
 RUN dnf install -y -q --allowerasing --nobest nodejs-devel nodejs-libs \
-  # already installed or installed as deps: 
+  # already installed or installed as deps:
   openssl openssl-devel ca-certificates make cmake cpp gcc gcc-c++ zlib zlib-devel brotli brotli-devel python3 nodejs-packaging && \
   dnf update -y && dnf clean all
 
@@ -70,13 +70,13 @@ FROM skeleton AS cleanup
 
 # Upstream only - copy the install dependencies from the build stage and context
 COPY --from=build $CONTAINER_SOURCE/yarn.lock \
-     $CONTAINER_SOURCE/package.json \
-     $CONTAINER_SOURCE/packages/backend/dist/skeleton.tar.gz \
-     $CONTAINER_SOURCE/packages/backend/dist/bundle.tar.gz \
-     ./
+  $CONTAINER_SOURCE/package.json \
+  $CONTAINER_SOURCE/packages/backend/dist/skeleton.tar.gz \
+  $CONTAINER_SOURCE/packages/backend/dist/bundle.tar.gz \
+  ./
 ENV TARBALL_PATH=.
 RUN tar xzf $TARBALL_PATH/skeleton.tar.gz; tar xzf $TARBALL_PATH/bundle.tar.gz; \
-    rm -f $TARBALL_PATH/skeleton.tar.gz $TARBALL_PATH/bundle.tar.gz
+  rm -f $TARBALL_PATH/skeleton.tar.gz $TARBALL_PATH/bundle.tar.gz
 
 # Copy app-config files needed in runtime
 # Upstream only
@@ -113,6 +113,7 @@ RUN fix-permissions ./
 # Switch to nodejs user
 USER 1001
 
-ENTRYPOINT ["node", "packages/backend", "--config", "app-config.yaml", "--config", "app-config.example.yaml", "--config", "app-config.example.production.yaml"]
+ENTRYPOINT ["node", "packages/backend", "--config", "app-config.yaml"]
+CMD ["--config", "app-config.example.yaml", "--config", "app-config.example.production.yaml"]
 
 # append Brew metadata here
