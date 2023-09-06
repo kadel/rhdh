@@ -34,9 +34,11 @@ jobs:
             const { promises: fs } = require("fs");
             // Parses package.json files and returns the package names
             async function getPackagesNames(files) {
+              console.log("files", files);
               const names = [];
               for (const file of files) {
                 const data = JSON.parse(await fs.readFile(file, "utf8"));
+                console.log("data", data);
                 if (!data.private) {
                   names.push(data.name);
                 }
