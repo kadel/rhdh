@@ -16,7 +16,7 @@
 # 1. comment out lines with EXTERNAL_SOURCE=. and CONTAINER_SOURCE=/opt/app-root/src
 # 2. uncomment lines with EXTERNAL_SOURCE and CONTAINER_SOURCE pointing at $REMOTE_SOURCES and $REMOTE_SOURCES_DIR instead (Brew defines these paths)
 # 3. uncomment lines with RUN source .../cachito.env
-# 4. add Brew metadata 
+# 4. add Brew metadata
 
 # Stage 1 - Build nodejs skeleton
 #@follow_tag(registry.access.redhat.com/ubi9/nodejs-18:1)
@@ -204,6 +204,10 @@ RUN alternatives --install /usr/bin/python python /usr/bin/python3.11 1
 COPY --from=build --chown=1001:1001 $REMOTE_SOURCES_DIR/ ./
 # Downstream only - copy embedded dynamic plugins from $REMOTE_SOURCES_DIR
 COPY --from=build $REMOTE_SOURCES_DIR/dynamic-plugins/dist/ ./dynamic-plugins/dist/
+
+# Workaround for downstream issue https://issues.redhat.com/browse/RHIDP-728
+RUN mkdir /opt/app-root/src/.npm
+RUN chown -R 1001:1001 /opt/app-root/src/.npm
 
 # Copy script to gather dynamic plugins; copy embedded dynamic plugins to root folder; fix permissions
 COPY docker/install-dynamic-plugins.py docker/install-dynamic-plugins.sh ./
