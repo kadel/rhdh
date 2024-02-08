@@ -1,0 +1,86 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: argocd
+  title: ArgoCD
+  description: Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. We use ArgoCD for the deployment of this showcase.
+  links:
+    - url: https://argocd.operate-first.cloud/
+      title: Instance of ArgoCD
+      icon: web
+    - url: https://argo-cd.readthedocs.io/en/stable/
+      title: Documentation
+      icon: web
+
+spec:
+  type: identity-provider
+  lifecycle: production
+  owner: janus-authors
+  system: janus-idp
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: github
+  title: GitHub Showcase repository
+  description: We store our deployment manifests and code for the janus showcase in this GitHub repository.
+  links:
+    - url: https://github.com/janus-idp/backstage-showcase
+      title: GitHub Repository
+      icon: web
+spec:
+  type: repository
+  lifecycle: production
+  owner: janus-authors
+  system: janus-idp
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: keycloak
+  title: KeyCloak
+  description: Keycloak is an open source software product to allow single sign-on with identity and access management aimed at modern applications and services. We use keycloack in this showcase.
+  links:
+    - url: https://www.keycloak.org/documentation
+      title: Documentation
+      icon: web
+spec:
+  type: identity-provider
+  lifecycle: production
+  owner: janus-authors
+  system: janus-idp
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: obc
+  title: S3 Object bucket storage
+  description: Amazon Simple Storage Service used for storing our built techdocs.
+  links:
+    - url: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingBucket.html
+      title: Documentation
+      icon: web
+spec:
+  type: s3-bucket
+  lifecycle: production
+  owner: janus-authors
+  system: janus-idp
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: pgdb
+  title: PostgreSQL cluster
+  description: PostgreSQL is a powerful, open source object-relational database system. PostgreSQL cluster is created by Crunchy Postgres for Kubernetes operator. We use Postgres as the databse for this showcase.
+  links:
+    - url: https://www.crunchydata.com/products/crunchy-high-availability-postgresql
+      title: Crunchy product pages
+      icon: web
+    - url: https://access.crunchydata.com/documentation/postgres-operator/v5/
+      title: Documentation
+      icon: web
+spec:
+  type: database
+  lifecycle: production
+  owner: janus-authors
+  system: janus-idp
