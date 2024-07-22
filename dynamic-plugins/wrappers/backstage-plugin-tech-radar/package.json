@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@backstage/core-plugin-api": "1.9.2",
-    "@mui/icons-material": "5.15.6",
-    "@backstage-community/plugin-tech-radar": "0.7.4"
+    "@mui/icons-material": "5.16.4",
+    "@backstage-community/plugin-tech-radar": "0.7.5"
   },
   "devDependencies": {
     "@backstage/cli": "0.26.4",

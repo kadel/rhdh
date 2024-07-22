@@ -20,7 +20,7 @@
     "export-dynamic": "janus-cli package export-dynamic-plugin --in-place"
   },
   "dependencies": {
-    "@backstage-community/plugin-azure-devops": "0.4.4"
+    "@backstage-community/plugin-azure-devops": "0.4.7"
   },
   "devDependencies": {
     "@backstage/cli": "0.26.4",

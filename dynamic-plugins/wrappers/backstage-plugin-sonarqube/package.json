@@ -20,7 +20,7 @@
     "export-dynamic": "janus-cli package export-dynamic-plugin --in-place"
   },
   "dependencies": {
-    "@backstage-community/plugin-sonarqube": "0.7.17"
+    "@backstage-community/plugin-sonarqube": "0.7.19"
   },
   "devDependencies": {
     "@backstage/cli": "0.26.4",

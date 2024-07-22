@@ -26,7 +26,7 @@
     "export-dynamic": "janus-cli package export-dynamic-plugin --embed-package @backstage-community/plugin-jenkins-backend --override-interop default --no-embed-as-dependencies"
   },
   "dependencies": {
-    "@backstage-community/plugin-jenkins-backend": "0.4.5"
+    "@backstage-community/plugin-jenkins-backend": "0.4.8"
   },
   "devDependencies": {
     "@backstage/cli": "0.26.4",
