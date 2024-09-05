@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: arb builds
+name: multi-platform builds
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'main'
