@@ -30,5 +30,6 @@ export const logger = createLogger({
       filename: `authentication-providers.log`,
       dirname: process.env.CI ? process.env.ARTIFACTS_DIR : '/tmp',
     }),
+    new transports.Console(),
   ],
 });

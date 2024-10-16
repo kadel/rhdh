@@ -13,18 +13,28 @@ export async function runShellCmd(command: string) {
     const process = exec(command);
     let result: string;
     process.stdout.on('data', data => {
+      logger.log({
+        level: 'debug',
+        message: `Stdout output:`,
+        dump: data,
+      });
       result = data;
     });
     process.stderr.on('data', data => {
       logger.log({
-        level: 'error',
-        message: `Error occurred while running command`,
+        level: 'debug',
+        message: `Stderr output:`,
         dump: data,
       });
-      reject();
-      throw Error('Error executing shell command');
     });
-    process.on('exit', () => resolve(result));
+    process.on('exit', code => {
+      if (code == 0) {
+        resolve(result)
+      } else {
+        reject();
+        throw Error('Error executing shell command');
+      }
+    });
   });
 }
 

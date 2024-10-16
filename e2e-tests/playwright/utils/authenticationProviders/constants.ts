@@ -36,7 +36,9 @@ export const TAG_NAME = process.env.TAG_NAME;
 export const AUTH_PROVIDERS_VALUES_FILE =
   '../.ibm/pipelines/value_files/values-showcase_auth-providers.yaml';
 export const AUTH_PROVIDERS_POD_STRING =
-  AUTH_PROVIDERS_RELEASE + '-' + AUTH_PROVIDERS_CHART.split('/')[1];
+  AUTH_PROVIDERS_RELEASE || AUTH_PROVIDERS_CHART
+    ? AUTH_PROVIDERS_RELEASE + '-' + AUTH_PROVIDERS_CHART.split('/')[1]
+    : '';
 export const AUTH_PROVIDERS_BASE_URL = `https://${AUTH_PROVIDERS_RELEASE}-backstage-${AUTH_PROVIDERS_NAMESPACE}.${process.env.K8S_CLUSTER_ROUTER_BASE}`;
 
 export const GH_USER_PASSWORD = process.env.GH_USER_PASSWORD;
