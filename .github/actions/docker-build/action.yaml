@@ -88,4 +88,4 @@ runs:
         provenance: false
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-        platform: ${{ steps.meta.outputs.platform }}
+        platforms: ${{ steps.meta.outputs.platform }}
