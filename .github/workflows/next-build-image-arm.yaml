@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Next (amd)
+name: Next (arm)
 
 on:
   push:
@@ -60,7 +60,7 @@ jobs:
           #imageName: ${{ github.repository }}
           imageName: tkral/backstage-showcase
           imageTags: |
-            type=raw,value=next
-            type=sha,prefix=next-
+            type=raw,value=next-arm64
+            type=sha,prefix=next-,suffix=-amd64
           imageLabels: quay.expires-after=14d
           push: true

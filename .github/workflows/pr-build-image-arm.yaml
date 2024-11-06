@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: Image from PR (amd64)
+name: Image from PR (arm64)
 
 on:
   pull_request_target:
@@ -72,11 +72,12 @@ jobs:
           #imageName: ${{ github.repository }}
           imageName: tkral/backstage-showcase
           imageTags: |
-            type=ref,prefix=pr-,event=pr
-            type=ref,prefix=pr-,suffix=-${{ env.SHORT_SHA }},event=pr
+            type=ref,prefix=pr-,suffix=-arm64,event=pr
+            type=ref,prefix=pr-,suffix=-${{ env.SHORT_SHA }}-arm64,event=pr
           # to autodelete PR image tags, set an expiry date
           imageLabels: quay.expires-after=14d
           push: true
+          platform: linux/arm64
 
       - name: Comment the image pull link
         uses: actions/github-script@v7
