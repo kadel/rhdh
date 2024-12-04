@@ -52,16 +52,8 @@ jobs:
           git fetch base-origin ${{ github.event.pull_request.base.ref }}
           git merge --no-edit base-origin/${{ github.event.pull_request.base.ref }}
 
-      - name: Get the last commit short SHA of the PR
-        run: |
-          SHORT_SHA=$(git rev-parse --short=8 ${{ github.event.pull_request.head.sha }})
-          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
-          if [[ -f packages/app/src/build-metadata.json ]]; then
-            repoPR="${{ github.repository }}/pull/${{ github.event.number }}"
-            now="$(date -u +%FT%TZ)"
-            sed -i packages/app/src/build-metadata.json -r \
-              -e 's|("Last Commit:.+)|"Last Commit: '$repoPR' @ '$SHORT_SHA'"|'
-          fi
+      - name: Get the last commit short SHA
+        uses: ./.github/actions/get-sha
 
       - name: Build and Push with Buildx
         uses: ./.github/actions/docker-build
@@ -76,6 +68,7 @@ jobs:
           # to autodelete PR image tags, set an expiry date
           imageLabels: quay.expires-after=14d
           push: true
+          platform: linux/amd64
 
       - name: Comment the image pull link
         uses: actions/github-script@v7
