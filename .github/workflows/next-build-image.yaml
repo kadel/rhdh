@@ -30,7 +30,7 @@ concurrency:
 
 env:
   REGISTRY: quay.io
-  REGISTRY_IMAGE: rhdh-community/rhdh
+  REGISTRY_IMAGE: tkral/backstage-showcase
 
 jobs:
   build-image:
