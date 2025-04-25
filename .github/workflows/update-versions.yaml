@@ -30,6 +30,8 @@ jobs:
 
       - name: Run update-versions-doc script
         run: node scripts/update-versions-doc.mjs docs/dynamic-plugins/versions.md
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
 
       - name: Create Pull Request for main
         uses: peter-evans/create-pull-request@v7

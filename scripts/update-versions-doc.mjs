@@ -10,8 +10,7 @@ if (!outputFilePath) {
   process.exit(1);
 }
 
-const owner = 'redhat-developer';
-const repo = 'rhdh';
+const repository = process.env.GITHUB_REPOSITORY || 'redhat-developer/rhdh';
 
 // old branches
 const skipBranches = [
@@ -47,8 +46,8 @@ const backendPackages = [
 
 // List all branches in the repository
 // uses fetch and no github library to avoid depencies on extra libraries
-async function listBranchNames(owner, repo, page = 1, collected = []) {
-  const url = `https://api.github.com/repos/${owner}/${repo}/branches?page=${page}`;
+async function listBranchNames(repository, page = 1, collected = []) {
+  const url = `https://api.github.com/repos/${repository}/branches?page=${page}`;
 
   try {
     const response = await fetch(url, {
@@ -59,7 +58,7 @@ async function listBranchNames(owner, repo, page = 1, collected = []) {
 
     if (!response.ok) {
       if (response.status === 404) {
-        console.log(`Repository ${owner}/${repo} not found.`);
+        console.log(`Repository ${repository} not found.`);
       } else {
         console.error(`Error listing branches:`, response.statusText);
       }
@@ -74,7 +73,7 @@ async function listBranchNames(owner, repo, page = 1, collected = []) {
     const hasNext = links && links.includes('rel="next"');
 
     if (hasNext) {
-      return listBranchNames(owner, repo, page + 1, allNames);
+      return listBranchNames(repository, page + 1, allNames);
     } else {
       return allNames;
     }
@@ -86,8 +85,8 @@ async function listBranchNames(owner, repo, page = 1, collected = []) {
 }
 
 // return the content of the file
-async function getFileFromGithub(owner, repo, branch, filePath) {
-  const url = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`;
+async function getFileFromGithub(repository, branch, filePath) {
+  const url = `https://raw.githubusercontent.com/${repository}/${branch}/${filePath}`;
   try {
     const response = await fetch(url, {
       headers: {
@@ -145,7 +144,7 @@ async function writeToFile(filePath, content) {
 
 async function main() {
 
-  const allBranches = await listBranchNames(owner, repo);
+  const allBranches = await listBranchNames(repository);
 
   // only release branches and not in skipBranches
   const relaseBranches = allBranches
@@ -179,7 +178,7 @@ async function main() {
     }
     console.log(`Release: ${release}`)
 
-    const backstageJson = await getFileFromGithub(owner, repo, branch, backstageJsonPath);
+    const backstageJson = await getFileFromGithub(repository, branch, backstageJsonPath);
     const backstageVersion = JSON.parse(backstageJson).version
 
     if (!backstageVersion) {
@@ -188,15 +187,15 @@ async function main() {
 
     const minorBackstageVersion = backstageVersion.split('.').slice(0, 2).join('.')
 
-    const frontendPackageJson = await getFileFromGithub(owner, repo, branch, frontendPackageJsonPath);
-    const backendPackageJson = await getFileFromGithub(owner, repo, branch, backendPackageJsonPath);
+    const frontendPackageJson = await getFileFromGithub(repository, branch, frontendPackageJsonPath);
+    const backendPackageJson = await getFileFromGithub(repository, branch, backendPackageJsonPath);
 
     const frontendTable = await generateTable(JSON.parse(frontendPackageJson), frontendPackages)
     const backendTable = await generateTable(JSON.parse(backendPackageJson), backendPackages)
 
     const preRelaseInfo = `(pre-release, versions can change for final release)`
 
-    const createAppPackageJson = await getFileFromGithub("backstage", "backstage", `v${backstageVersion}`, 'packages/create-app/package.json');
+    const createAppPackageJson = await getFileFromGithub("backstage/backstage", `v${backstageVersion}`, 'packages/create-app/package.json');
     const createAppVersion = JSON.parse(createAppPackageJson).version
 
     if (!createAppVersion) {
