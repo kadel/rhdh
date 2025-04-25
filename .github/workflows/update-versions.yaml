@@ -10,7 +10,6 @@ on:
 
 jobs:
   update-versions-md:
-    if: startsWith(github.ref, 'refs/heads/release-') || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Generate token
@@ -33,27 +32,13 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
 
-      - name: Create Pull Request for main
+      - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: "Update versions.md in dynamic plugin documentation"
-          branch: update-versions-doc
-          title: "Update versions.md in dynamic plugin documentation"
-          body: "This PR updates the versions documentation based on recent changes."
-          labels: "documentation"
-          base: main
-          signoff: true
-          delete-branch: true
-
-      - name: Create Pull Request for release branch
-        if: startsWith(github.ref, 'refs/heads/release-')
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ steps.generate-token.outputs.token }}
-          commit-message: "Update versions.md in dynamic plugin documentation"
-          branch: update-versions-doc
-          title: "Update versions.md in dynamic plugin documentation"
+          branch: update-versions-doc-${{ github.ref_name }}
+          title: "[${{ github.ref_name }}] Update versions.md in dynamic plugin documentation"
           body: "This PR updates the versions documentation based on recent changes."
           labels: "documentation"
           signoff: true
