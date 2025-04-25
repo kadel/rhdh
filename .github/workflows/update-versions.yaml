@@ -38,7 +38,7 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: "Update versions.md in dynamic plugin documentation"
-          branch: update-versions-doc
+          branch: update-versions-doc-main
           title: "Update versions.md in dynamic plugin documentation"
           body: "This PR updates the versions documentation based on recent changes."
           labels: "documentation"
@@ -52,7 +52,7 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
           commit-message: "Update versions.md in dynamic plugin documentation"
-          branch: update-versions-doc
+          branch: update-versions-doc-${{ github.ref_name }}
           title: "Update versions.md in dynamic plugin documentation"
           body: "This PR updates the versions documentation based on recent changes."
           labels: "documentation"
